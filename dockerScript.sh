@@ -51,12 +51,41 @@ read -p "Do you have a container running with port 22 openned?(y/n)" answer
 echo "------------------------------";
 if [ $answer = "y" ]
 then
+	echo "Listing all contairners.....";
+	echo " ";
+	docker ps  --format "ID:   {{.ID}}   ,    NAME:     {{.Names}}  ,  IMAGE:     {{.Image}}"
+	echo " ";
 	echo "--------------------------------";
-	echo "Give me the following data:" 
+	echo "Give me the following data about the container:" 
 	read -p "Container id: " container
-	read -p "User: " user
-	read -p "Password: " password
+	read -p "User for ssh: " user
+	read -p "Password for ssh: " password
 	echo "--------------------------------";
+	echo "Installing openssh-server at the container";
+	docker exec -it $container apt-get update -y 1>/dev/null
+	docker exec -it $container apt-get install openssh-server -y 1>/dev/null
+	echo "Installing systemctl and showing openssh status";
+	docker exec -it $container apt-get install systemctl -y 1>/dev/null
+	docker exec -it $container systemctl status ssh
+	sleep 1
+	echo "Adding user and password to container";
+	
+	docker exec -it $container adduser $user 
+	
+	echo "Starting openssh-server......"
+	docker exec -it $container service ssh start 
+	ip=$(docker inspect --format {{".NetworkSettings.IPAddress"}} $container)
+	echo "--------------------------------";
+	read -p "Do you want to connect to the container?: " answ
+	ssh $user@$ip
+
+	if [ $answ = "y"]
+	then
+		ssh $user@$ip
+	else
+		echo "$ip, $user, $password , $container";
+	fi
+
 else
 	echo "---------------------------------";
 	echo "Running a Docker container with Ubuntu image and port 22 opened..."
