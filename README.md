@@ -22,4 +22,4 @@ For this script we have combined a bash script with a Dockerfile:
 
 * The bash script executes a series of commands to act as a CLI and at the same time execute a series of processes such as installing, updating programs in a docker       container and creating a test user but before that we must have a container created with the port 22.
 
-* Dockerfile this file is the second part of the script,were we are in the case that we don't have a container created with a port 22 yet,then this file is creaates a container.
+* Dockerfile this file is the second part of the script,were we are in the case that we don't have a container created with a port 22 yet,then this file is creates a container.
