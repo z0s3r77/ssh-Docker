@@ -3,10 +3,6 @@
 -   [**Introduction**](#introduction)
 -   [**Docker description**](#docker-description)
 -   [**Implementing bash with docker**](#implementing-bash-with-docker)
--   [**Instructions**](#instructions)
--   [**In game**](#in-game)
--   [**The end of the game and winner**](#the-end-of-the-game-and-winner)
-- 	[**Yahtzee sheet**](#yahtzee-sheet)
 
 # Free code script
 
